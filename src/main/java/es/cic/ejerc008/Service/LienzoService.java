@@ -41,7 +41,7 @@ public class LienzoService{
 		    Lienzo lienzo = lienzoRepository.findById(lienzoId)
 		            .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
 
-	        Figura figura = convertirDTOaFigura(figuraDTO);
+	        Figura figura =  figuraAssembler.toEntity(figuraDTO);
 	        figura.setLienzo(lienzo);
 
 	        lienzo.getFiguras().add(figura);
@@ -58,7 +58,7 @@ public class LienzoService{
 		            .findFirst()
 		            .orElseThrow(() -> new EntityNotFoundException("Figura no encontrada en el lienzo con ID: " + figuraDTO.getId()));
 
-		    Figura figuraActualizada = convertirDTOaFigura(figuraDTO);
+		    Figura figuraActualizada =  figuraAssembler.toEntity(figuraDTO);
 		    figuraActualizada.setLienzo(lienzo); // Establece la relación con el lienzo
 
 		    lienzo.getFiguras().remove(figuraExistente);
