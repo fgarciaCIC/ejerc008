@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,45 +24,46 @@ import es.cic.ejerc008.Repository.LienzoRepository;
 @Transactional
 public class LienzoService{
 
-	@Autowired
-	FiguraRepository figuraRepo;
+	  @Autowired
+	    private FiguraRepository figuraRepository;
+
 	@Autowired
     LienzoRepository lienzoRepository;
 	
 
 	 public void agregarFiguraALienzo(Long lienzoId, FiguraCompletaDTO figuraDTO) {
-	       Optional<Lienzo> lienzo = lienzoRepository.findById(lienzoId);
-	               // .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
+		    Lienzo lienzo = lienzoRepository.findById(lienzoId)
+		            .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
 
 	        Figura figura = convertirDTOaFigura(figuraDTO);
-	  //      figura.setLienzo(lienzo);
+	        figura.setLienzo(lienzo);
 
-	//        lienzo.getFiguras().add(figura);
+	        lienzo.getFiguras().add(figura);
 
 	        lienzoRepository.save(lienzo);
 	    }
 
 	 public void actualizarFiguraEnLienzo(Long lienzoId, FiguraCompletaDTO figuraDTO) {
-		 Optional<Lienzo> lienzo = lienzoRepository.findById(lienzoId);
-	//                orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
+		    Lienzo lienzo = lienzoRepository.findById(lienzoId)
+		            .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
 
-	        Figura figuraExistente = lienzo.getFiguras().stream()
-	                .filter(f -> f.getId().equals(figuraDTO.getId()))
-	                .findFirst()
-	                .orElseThrow(() -> new EntityNotFoundException("Figura no encontrada en el lienzo con ID: " + figuraDTO.getId()));
+		    Figura figuraExistente = lienzo.getFiguras().stream()
+		            .filter(f -> f.getId().equals(figuraDTO.getId()))
+		            .findFirst()
+		            .orElseThrow(() -> new EntityNotFoundException("Figura no encontrada en el lienzo con ID: " + figuraDTO.getId()));
 
-	        Figura figuraActualizada = convertirDTOaFigura(figuraDTO);
-	        figuraActualizada.setLienzo(lienzo);
+		    Figura figuraActualizada = convertirDTOaFigura(figuraDTO);
+		    figuraActualizada.setLienzo(lienzo); // Establece la relación con el lienzo
 
-	        lienzo.getFiguras().remove(figuraExistente);
-	        lienzo.getFiguras().add(figuraActualizada);
+		    lienzo.getFiguras().remove(figuraExistente);
+		    lienzo.getFiguras().add(figuraActualizada);
 
-	        lienzoRepository.save(lienzo);
-	    }
-
+		    lienzoRepository.save(lienzo);
+		}
+	 
 	  public void eliminarFiguraDeLienzo(Long lienzoId, Long figuraId) {
-		  Optional<Lienzo> lienzo = lienzoRepository.findById(lienzoId);
-	 //               .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
+		    Lienzo lienzo = lienzoRepository.findById(lienzoId)
+		            .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
 
 	        Figura figuraExistente = lienzo.getFiguras().stream()
 	                .filter(f -> f.getId().equals(figuraId))
@@ -96,6 +98,16 @@ public class LienzoService{
 	        }
 
 	        return figura;
+	    }
+	    
+	    private List<Figura> convertirDTOSaFiguras(List<Long> listaIds) {
+	        List<Figura> figuras = new ArrayList<>();
+	        for (Long figuraId : listaIds) {
+	            Figura figura = figuraRepository.findById(figuraId)
+	                    .orElseThrow(() -> new EntityNotFoundException("Figura no encontrada con ID: " + figuraId));
+	            figuras.add(figura);
+	        }
+	        return figuras;
 	    }
 
 	 
@@ -132,10 +144,26 @@ public class LienzoService{
 	}
 
 	
-	public void actualizarLienzo(LienzoDTO lienzo) {
-		// TODO Auto-generated method stub
-		
-	}
+	 public void actualizarLienzo(LienzoDTO lienzoDTO) {
+	        // Obtener el lienzo de la base de datos por su ID
+	        Long lienzoId = lienzoDTO.getId();
+	        Lienzo lienzo = lienzoRepository.findById(lienzoId)
+	                .orElseThrow(() -> new EntityNotFoundException("Lienzo no encontrado con ID: " + lienzoId));
+
+	        // Actualizar las propiedades del lienzo con los valores del DTO
+	        // Por ejemplo:
+	        lienzo.setMaxX(lienzoDTO.getMaxX());
+	        lienzo.setMaxY(lienzoDTO.getMaxY());
+
+	        // Actualizar las figuras del lienzo si es necesario
+	        // Por ejemplo:
+	        List<Figura> figuras = convertirDTOSaFiguras(lienzoDTO.getFiguras());
+	        lienzo.setFiguras(figuras);
+
+	        // Guardar los cambios en la base de datos
+	        lienzoRepository.save(lienzo);
+	    }
+	 
 
 	 public Lienzo crearLienzo(LienzoDTO lienzoDTO) {
         Lienzo lienzo = new Lienzo();

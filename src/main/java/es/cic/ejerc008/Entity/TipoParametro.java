@@ -19,5 +19,21 @@ public class TipoParametro {
 
     private String nombreTipoParametro;
 
+	
     // Constructor, getters y setters
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+	public String getNombreTipoParametro() {
+		return nombreTipoParametro;
+	}
+
+
+	public void setNombreTipoParametro(String nombreTipoParametro) {
+		this.nombreTipoParametro = nombreTipoParametro;
+	}
+    
 }

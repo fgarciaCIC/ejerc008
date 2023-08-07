@@ -1,12 +1,18 @@
 package es.cic.ejerc008.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Figura {
@@ -21,6 +27,14 @@ public class Figura {
     private int posicionY;
     private String color;
     private int longitud; // propiedad de solo lectura informativa
+    
+    @OneToMany(mappedBy = "figura", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleFigura> detalles = new ArrayList<>();
+
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lienzo_id")
+    private Lienzo lienzo;
 
     // constructor
     public Figura(String tipo, int posicionX, int posicionY, String color) {
@@ -78,15 +92,24 @@ public class Figura {
 	        return maxY;
 	    }
 		public void setDetalles(List<DetalleFigura> detalles) {
-			// TODO Auto-generated method stub
+			 this.detalles.clear();
+		        if (detalles != null) {
+		            this.detalles.addAll(detalles);
+		            detalles.forEach(detalle -> detalle.setFigura(this));
+		        }
 			
-		}
-		public void setLienzo(Optional<Lienzo> lienzo) {
-			// TODO Auto-generated method stub
+		}		
 			
+		public void setLienzo(Lienzo lienzo2) {
+			 if (this.lienzo != null) {
+		            this.lienzo.getFiguras().remove(this);
+		        }
+		        this.lienzo = lienzo;
+		        if (lienzo != null) {
+		            lienzo.getFiguras().add(this);
+		        }
 		}
 		
-	
-    
-  
+		
+		  
 }
