@@ -1,6 +1,11 @@
 package es.cic.ejerc008.DTO;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import es.cic.ejerc008.Entity.DetalleFigura;
+import es.cic.ejerc008.Entity.Figura;
+import es.cic.ejerc008.Entity.TipoParametro;
 
 public class FiguraCompletaDTO {
     private Long id;
@@ -67,4 +72,34 @@ public class FiguraCompletaDTO {
     public void setDetalles(List<DetalleFiguraDTO> detalles) {
         this.detalles = detalles;
     }
+  
+    // Convertir un DTO de figura completa a Figura y su Detalle
+    private Figura convertirDTOaFigura(FiguraCompletaDTO figuraDTO) {
+        Figura figura = new Figura(null, 0, 0, null);
+
+        figura.setId(figuraDTO.getId());
+        figura.setTipoFigura(figuraDTO.getTipoFigura());
+        figura.setPosicionX(figuraDTO.getPosicionX());
+        figura.setPosicionY(figuraDTO.getPosicionY());
+        figura.setColor(figuraDTO.getColor());
+
+        if (figuraDTO.getDetalles() != null) {
+            List<DetalleFigura> detalles = new ArrayList<>();
+            for (DetalleFiguraDTO detalleDTO : figuraDTO.getDetalles()) {
+                DetalleFigura detalle = new DetalleFigura();
+                detalle.setId(detalleDTO.getId());
+
+                TipoParametro tipoParametro = new TipoParametro();
+                tipoParametro.setId(detalleDTO.getTipoParametroId());
+                detalle.setTipoParametro(tipoParametro);
+
+                detalle.setValor(detalleDTO.getValor());
+                detalles.add(detalle);
+            }
+            figura.setDetalles(detalles);
+        }
+
+        return figura;
+    }
+      
 }

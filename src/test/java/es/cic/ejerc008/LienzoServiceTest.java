@@ -57,8 +57,8 @@ public class LienzoServiceTest {
 	        // Inicializar lienzo con datos de prueba
 	        Lienzo lienzo = new Lienzo();
 	        lienzo.setId(lienzoId);
-	        lienzo.setMaxX(800);
-	        lienzo.setMaxY(600);
+	     //   lienzo.setMaxX(800);
+	       // lienzo.setMaxY(600);
 	     
 	        // Inicializar figura con datos de prueba
 	        Figura figura = new Figura(null, 0, 0, null);

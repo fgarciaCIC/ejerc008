@@ -1,9 +1,12 @@
 package es.cic.ejerc008.DTO;
 
+import es.cic.ejerc008.Entity.DetalleFigura;
+import es.cic.ejerc008.Entity.TipoParametro;
+
 public class DetalleFiguraDTO {
     private Long id;
     private Long tipoParametroId;
-    private String valor;
+    private Long valor;
 
     public Long getId() {
         return id;
@@ -21,11 +24,15 @@ public class DetalleFiguraDTO {
         this.tipoParametroId = tipoParametroId;
     }
 
-    public String getValor() {
+    public Long getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(Long valor) {
         this.valor = valor;
     }
+    
+      
+    
+  
 }

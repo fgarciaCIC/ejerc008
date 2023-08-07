@@ -14,9 +14,11 @@ import es.cic.ejerc008.DTO.DetalleFiguraDTO;
 import es.cic.ejerc008.DTO.FiguraCompletaDTO;
 import es.cic.ejerc008.DTO.FiguraDTO;
 import es.cic.ejerc008.DTO.LienzoDTO;
+import es.cic.ejerc008.DTO.TipoParametroDTO;
 import es.cic.ejerc008.Entity.DetalleFigura;
 import es.cic.ejerc008.Entity.Figura;
 import es.cic.ejerc008.Entity.Lienzo;
+import es.cic.ejerc008.Entity.TipoParametro;
 import es.cic.ejerc008.Repository.FiguraRepository;
 import es.cic.ejerc008.Repository.LienzoRepository;
 import es.cic.ejerc008.assembler.FiguraAssembler;
@@ -25,7 +27,7 @@ import es.cic.ejerc008.assembler.FiguraAssembler;
 @Transactional
 public class LienzoService{
 
-	  @Autowired
+	@Autowired
 	    private FiguraRepository figuraRepository;
 
 	@Autowired
@@ -79,31 +81,7 @@ public class LienzoService{
 	        lienzoRepository.save(lienzo);
 	    }
 
-	    private Figura convertirDTOaFigura(FiguraCompletaDTO figuraDTO) {
-	        // realizar la conversión de FiguraCompletaDTO a Figura
-	    	Figura figura = new Figura(null, 0, 0, null);
-
-	        figura.setId(figuraDTO.getId());
-	        figura.setTipoFigura(figuraDTO.getTipoFigura());
-	        figura.setPosicionX(figuraDTO.getPosicionX());
-	        figura.setPosicionY(figuraDTO.getPosicionY());
-	        figura.setColor(figuraDTO.getColor());
-
-	        if (figuraDTO.getDetalles() != null) {
-	            List<DetalleFigura> detalles = new ArrayList<>();
-	            for (DetalleFiguraDTO detalleDTO : figuraDTO.getDetalles()) {
-	                DetalleFigura detalle = new DetalleFigura();
-	                detalle.setId(detalleDTO.getId());
-	                detalle.setTipoParametroId(detalleDTO.getTipoParametroId());
-	                detalle.setValor(detalleDTO.getValor());
-	                detalles.add(detalle);
-	            }
-	            figura.setDetalles(detalles);
-	        }
-
-	        return figura;
-	    }
-	    
+		    
 	    private List<Figura> convertirDTOSaFiguras(List<Long> listaIds) {
 	        List<Figura> figuras = new ArrayList<>();
 	        for (Long figuraId : listaIds) {
@@ -156,8 +134,8 @@ public class LienzoService{
 
 	        // Actualizar las propiedades del lienzo con los valores del DTO
 	        // Por ejemplo:
-	        lienzo.setMaxX(lienzoDTO.getMaxX());
-	        lienzo.setMaxY(lienzoDTO.getMaxY());
+	 //       lienzo.setMaxX(lienzoDTO.getMaxX());
+	 //       lienzo.setMaxY(lienzoDTO.getMaxY());
 
 	        // Actualizar las figuras del lienzo si es necesario
 	        // Por ejemplo:

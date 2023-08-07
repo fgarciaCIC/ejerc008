@@ -16,11 +16,13 @@ public class Lienzo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private int maxX = 1000000;
-	private int maxY = 1000000;
+	private static final int maxX = 1000000;
+	private static final int  maxY = 1000000;
 
 	@OneToMany(mappedBy = "lienzo")
 	private List<Figura> figuras;
+	
+	
 	
 	//constructor	
 	public Lienzo() {
@@ -49,24 +51,7 @@ public class Lienzo {
 		this.figuras = figuras;
 	}
 
-	 public void setMaxX(int maxX) {	        
-	       
-	            this.maxX = maxX;
-	        	    }
-
-	public int getMaxX() {
-        return maxX;
-    }
 	
-	public void setMaxY(int maxY) {
-      
-            this.maxY = maxY;
-       
-    }
-
-    public int getMaxY() {
-        return maxY;
-    }
 
    
 	

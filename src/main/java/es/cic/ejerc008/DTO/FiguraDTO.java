@@ -34,12 +34,12 @@ public class FiguraDTO {
 	public void setPosicionY(int posicionY) {
 		this.posicionY = posicionY;
 	}
-	public String getTipoFigura(String tipoFigura) {
-        return tipoFigura;
-    }
+	public String getTipoFigura() {
+	    return tipoFigura;
+	}
 
-    public void setTipoFigura(String tipoFigura) {
-        this.tipoFigura = tipoFigura;
-    }
+	public void setTipoFigura(String tipoFigura) {
+	    this.tipoFigura = tipoFigura;
+	}
 	
 }

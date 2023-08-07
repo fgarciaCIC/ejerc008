@@ -20,8 +20,8 @@ public class LienzoAssembler {
 	    public Lienzo toEntity(LienzoDTO lienzoDTO) {
 	        Lienzo lienzo = new Lienzo();
 	        lienzo.setId(lienzoDTO.getId());
-	        lienzo.setMaxX(lienzoDTO.getMaxX());
-	        lienzo.setMaxY(lienzoDTO.getMaxY());
+	   //     lienzo.setMaxX(lienzoDTO.getMaxX());
+	    //    lienzo.setMaxY(lienzoDTO.getMaxY());
 	   //     lienzo.setFiguras(figuraAssembler.toEntityList(lienzoDTO.getFiguras()));
 	      
 	        return lienzo;
