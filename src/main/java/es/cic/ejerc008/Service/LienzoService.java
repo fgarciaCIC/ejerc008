@@ -2,7 +2,7 @@ package es.cic.ejerc008.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -32,7 +32,7 @@ public class LienzoService{
     LienzoRepository lienzoRepository;
 	
 	 @Autowired
-	    private FiguraAssembler figuraAssembler;
+	 private FiguraAssembler figuraAssembler;
 	
 
 	 public void agregarFiguraALienzo(Long lienzoId, FiguraCompletaDTO figuraDTO) {
@@ -174,5 +174,13 @@ public class LienzoService{
         
         return lienzoRepository.save(lienzo);
     }
+
+	public FiguraAssembler getFiguraAssembler() {
+		return figuraAssembler;
+	}
+
+	public void setFiguraAssembler(FiguraAssembler figuraAssembler) {
+		this.figuraAssembler = figuraAssembler;
+	}
 
 }
