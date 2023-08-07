@@ -7,6 +7,7 @@ public class FiguraDTO {
 	private String color;
 	private int posicionX;
 	private int posicionY;
+	private String tipoFigura;
 	
 	
 	public Long getId() {
@@ -33,5 +34,12 @@ public class FiguraDTO {
 	public void setPosicionY(int posicionY) {
 		this.posicionY = posicionY;
 	}
+	public String getTipoFigura(String tipoFigura) {
+        return tipoFigura;
+    }
+
+    public void setTipoFigura(String tipoFigura) {
+        this.tipoFigura = tipoFigura;
+    }
 	
 }

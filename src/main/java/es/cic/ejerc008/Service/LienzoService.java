@@ -19,6 +19,7 @@ import es.cic.ejerc008.Entity.Figura;
 import es.cic.ejerc008.Entity.Lienzo;
 import es.cic.ejerc008.Repository.FiguraRepository;
 import es.cic.ejerc008.Repository.LienzoRepository;
+import es.cic.ejerc008.assembler.FiguraAssembler;
 
 @Service
 @Transactional
@@ -29,6 +30,9 @@ public class LienzoService{
 
 	@Autowired
     LienzoRepository lienzoRepository;
+	
+	 @Autowired
+	    private FiguraAssembler figuraAssembler;
 	
 
 	 public void agregarFiguraALienzo(Long lienzoId, FiguraCompletaDTO figuraDTO) {
